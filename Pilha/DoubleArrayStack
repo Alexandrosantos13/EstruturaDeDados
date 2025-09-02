@@ -1,0 +1,132 @@
+public class DoubleArrayStack implements DoubleStackable {
+    private Object[] data;
+    private int topPointer1;
+    private int topPointer2;
+
+    public DoubleArrayStack() {
+        this(10);
+    }
+
+    public DoubleArrayStack(int length) {
+        data = new Object[length];
+        topPointer1 = data.length;
+        topPointer2 = -1;
+    }
+
+    // Métodos principais
+    @Override
+    public void push1(Object data) {
+        if (isFull1()) {
+            System.out.println("Stack is full");
+        }
+        else {
+            topPointer1--;
+            this.data[topPointer1] = data;
+        }
+    }
+
+    @Override
+    public void push2(Object data) {
+        if(isFull2()){
+            System.out.println("Stack is full");
+        }
+        else {
+            topPointer2++;
+            this.data[topPointer2] = data;
+        }
+    }
+
+    @Override
+    public Object pop1() {
+        Object temp = null;
+        
+        if(isEmpty1()) {
+            System.out.println("Stack is empty");
+        }
+        else {
+            temp = data[topPointer1];
+            topPointer1++;
+        }
+        return temp;
+    }
+
+    @Override
+    public Object pop2() {
+        Object temp = null;
+
+        if(isEmpty2()) {
+            System.out.println("Stack is empty");
+        }
+        else {
+            temp = data[topPointer2];
+            topPointer2--;
+        }
+        return temp;
+    }
+
+    @Override
+    public Object peek1() {
+        if (isEmpty1()) {
+            System.out.println("Stack is empty");
+        }
+        else{
+            return data[topPointer1];
+        }
+        return null;
+    }
+
+    @Override
+    public Object peek2() {
+        if (isEmpty2()) {
+            System.out.println("Stack is empty");
+        }
+        else{
+            return data[topPointer2];
+        }
+        return null;
+    }
+
+    // Métodos auxiliares
+    public boolean isEmpty1() {
+        return topPointer1 == data.length;
+    }
+
+    public boolean isEmpty2() {
+        return topPointer2 == -1;
+    }
+
+    public boolean isFull1() {
+        return topPointer2 + 1 == topPointer1;  
+    }
+
+    public boolean isFull2() {
+        return isFull1();  
+    }
+
+    public String print1() {
+        String result = "";
+
+        for(int i = topPointer1; i < data.length; i++) {
+            result += data[i];
+            if (i != data.length - 1) {
+                result += ";";
+            }
+        }
+        return "[" +result+ "]";
+    }
+
+    public String print2() {
+        String result = "";
+        
+        for(int i = topPointer2; i < data.length; i--) {
+            result += data[i];
+            if (i != data.length -1) {
+                result += ";";
+            }
+        }
+        return "[" +result+ "]";
+    }
+
+
+
+}

@@ -1,0 +1,79 @@
+// Aula 02 -> 25/08/2025
+
+public class InvertedArrayStack implements Stackable {
+    private Object[] data;
+    private int pointerTop;
+
+    public InvertedArrayStack() {
+        this(10);
+    }
+
+    public InvertedArrayStack(int length) {
+        pointerTop = data.length;
+        data = new Object[length];
+    }
+
+    // Métodos Principais
+    @Override
+    public void push(Object data) {
+        if(isFull()) {
+            System.out.println("Stack is full");
+        }
+        else {
+            pointerTop--;
+            this.data[pointerTop] = data;
+        }
+    }
+
+    @Override
+    public Object pop() {
+        Object temp = null;
+
+        if(isEmpty()) {
+            System.out.println("Stack is empty");
+        }
+        else {
+            temp = data[pointerTop];
+            pointerTop++;
+        }
+        return temp;
+    }
+
+    @Override
+    public Object peek() {
+        if(isEmpty()) {
+            System.out.println("Stack is empty");
+        }
+        else {
+            return data[pointerTop];
+        }
+        return null;
+    }
+
+    //Métodos Auxiliares
+    @Override
+    public boolean isEmpty() {
+        return(pointerTop == data.length);
+    }
+
+    @Override
+    public boolean isFull() {
+        return(pointerTop == -1);
+    }
+
+    @Override
+    public String print() {
+        String resultado = "[";
+        for(int i = pointerTop; i < data.length; i--){
+            if(i== data.length){
+                resultado += data[i];
+            }
+            else{
+                resultado += data[i] + ",";
+            }
+        }
+        return resultado + "]";
+    }
+
+
+}
