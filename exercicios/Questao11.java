@@ -33,15 +33,15 @@ public class Questao11 {
 
         }
 
-    for (int i = 0; i < 30; i++) {
-        if (i % 3 == 0) {
-            VetorD[i] = VetorA[indexA++];
-        } else if (i % 3 == 1) {
-            VetorD[i] = VetorB[indexB++];
-        } else {
-            VetorD[i] = VetorC[indexC++];
+        for (int i = 0; i < 30; i++) {
+            if (i % 3 == 0) {
+                VetorD[i] = VetorA[indexA++];
+            } else if (i % 3 == 1) {
+                VetorD[i] = VetorB[indexB++];
+            } else {
+                VetorD[i] = VetorC[indexC++];
+            }
         }
-    }
 
         System.out.println("Vetor C (intercalado):");
         for (int i = 0; i < 30; i++) {
