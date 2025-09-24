@@ -27,13 +27,13 @@ public class Questao20 {
                 if (salario.get(i) <= 500) {
                     abono.add(100.00);
                     valorminimo++;
-                    gastoabono = gastoabono+ abono.get(i);
+                    gastoabono = gastoabono + abono.get(i);
                     if (abono.get(i) > maiorabono) {
                         maiorabono = abono.get(i);
                     }
                 } else {
                     abono.add((salario.get(i) / 100.00) * 20.00);
-                    gastoabono = gastoabono+abono.get(i);
+                    gastoabono = gastoabono + abono.get(i);
                     if (abono.get(i) > maiorabono) {
                         maiorabono = abono.get(i);
                     }
@@ -42,12 +42,12 @@ public class Questao20 {
         }
         System.out.println("Salário    - Abono ");
         for (int i = 0; i < salario.size(); i++) {
-            System.out.printf("R$" + salario.get(i) + "  -  R$" + abono.get(i)+"\n");
+            System.out.printf("R$" + salario.get(i) + "  -  R$" + abono.get(i) + "\n");
         }
-             System.out.println("Foram processados "+ colaboradores +" colaboradores\r\n" + //
-                                "Total gasto com abonos: R$ "+gastoabono+"\r\n" + //
-                                "Valor mínimo pago a "+valorminimo +" colaboradores\r\n" + //
-                                "Maior valor de abono pago: R$ "+maiorabono+"\n");
+        System.out.println("Foram processados " + colaboradores + " colaboradores\r\n" + //
+                "Total gasto com abonos: R$ " + gastoabono + "\r\n" + //
+                "Valor mínimo pago a " + valorminimo + " colaboradores\r\n" + //
+                "Maior valor de abono pago: R$ " + maiorabono + "\n");
     }
 }
 
