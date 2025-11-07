@@ -24,7 +24,7 @@ import java.time.LocalDate;
  */
 public class BookDAOLinkedStack implements BookDAO {
 
-    /**
+    /***
      * Pilha principal para armazenamento dos livros.
      * Utiliza uma implementação baseada em lista encadeada com capacidade inicial de 20 elementos.
      */

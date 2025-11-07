@@ -2,23 +2,37 @@ import java.util.Scanner;
 
 public class Questao18 {
     public static void main(String[] args) {
+<<<<<<< HEAD:exercicios/Questao18.java
         int[] jogadores = new int[29];
         Scanner sc = new Scanner(System.in);
         int intermediario = 0;
         int totalVotos = 0;
+=======
+    int[] jogadores = new int[23];
+        Scanner sc = new Scanner(System.in);
+    int intermediario = 0;
+    int totalVotos = 0;
+    int melhorJogador = -1;
+    int votosMelhor = 0;
+>>>>>>> a5ce4d62993a0cd2e5533872f9e3076d14103cd8:Lista 1/Questao18.java
         System.out.println("Quem foi o melhor jogador?");
         while (true) {
             System.out.print("Número do jogador (0=fim): ");
             intermediario = sc.nextInt();
             if (intermediario == 0) {
                 break;
+<<<<<<< HEAD:exercicios/Questao18.java
             } else if (intermediario >= 1 && intermediario <= 29) {
+=======
+            } else if (intermediario >= 1 && intermediario <= 23) {
+>>>>>>> a5ce4d62993a0cd2e5533872f9e3076d14103cd8:Lista 1/Questao18.java
                 jogadores[intermediario - 1]++;
                 totalVotos++;
             } else {
                 System.out.println("Informe um valor entre 1 e 23 ou 0 para sair!");
             }
         }
+<<<<<<< HEAD:exercicios/Questao18.java
         for (int i = 0; i < 29; i++) {
             int media=(jogadores[i]/totalVotos)*100;
             if (jogadores[i] > 0) {
@@ -27,6 +41,32 @@ public class Questao18 {
             }
 
         }
+=======
+
+        System.out.println("\nResultado da votação:\n");
+        System.out.println("Foram computados " + totalVotos + " votos.");
+        System.out.println("Jogador   Votos   %");
+        for (int i = 0; i < jogadores.length; i++) {
+            if (jogadores[i] > 0) {
+                double percentual = calcularPercentual(jogadores[i], totalVotos);
+                System.out.printf("%2d %10d %6.1f%%\n", (i + 1), jogadores[i], percentual);
+                if (jogadores[i] > votosMelhor) {
+                    votosMelhor = jogadores[i];
+                    melhorJogador = i + 1;
+                }
+            }
+        }
+
+        if (melhorJogador != -1) {
+            double percentualMelhor = calcularPercentual(votosMelhor, totalVotos);
+            System.out.printf("\nO melhor jogador foi o número %d, com %d votos, correspondendo a %.1f%% do total de votos.\n",
+                melhorJogador, votosMelhor, percentualMelhor);
+        }
+    public static double calcularPercentual(int votosJogador, int totalVotos) {
+        if (totalVotos == 0) return 0.0;
+        return ((double) votosJogador / totalVotos) * 100.0;
+    }
+>>>>>>> a5ce4d62993a0cd2e5533872f9e3076d14103cd8:Lista 1/Questao18.java
     }
 
 }
