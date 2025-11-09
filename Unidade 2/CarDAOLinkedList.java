@@ -1,8 +1,4 @@
-package br.edu.ifba.vdc.bsi.linkedlistdao.dao;
 
-import br.edu.ifba.vdc.bsi.linkedlistdao.dao.repository.list.LinkedList;
-import br.edu.ifba.vdc.bsi.linkedlistdao.dao.repository.list.Listable;
-import br.edu.ifba.vdc.bsi.linkedlistdao.model.Car;
 import java.time.LocalDateTime;
 
 public class CarDAOLinkedList implements CarDAO {

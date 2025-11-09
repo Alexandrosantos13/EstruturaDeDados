@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class Car {
     private final String licensePlate;            // obrigatório, imutável
     private String mark;             // obrigatório

@@ -1,8 +1,4 @@
-package br.edu.ifba.vdc.bsi.linkeddequedao.dao;
 
-import br.edu.ifba.vdc.bsi.linkeddequedao.dao.repository.LinkedDEQue;
-import br.edu.ifba.vdc.bsi.linkeddequedao.dao.repository.DEQueable;
-import br.edu.ifba.vdc.bsi.linkeddequedao.model.Car;
 import java.time.LocalDateTime;
 
 /**

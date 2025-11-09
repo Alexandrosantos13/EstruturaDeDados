@@ -1,8 +1,4 @@
-package br.edu.ifba.vdc.bsi.linkedstackdao.dao;
 
-import br.edu.ifba.vdc.bsi.linkedstackdao.dao.repository.LinkedStack;
-import br.edu.ifba.vdc.bsi.linkedstackdao.dao.repository.Stackable;
-import br.edu.ifba.vdc.bsi.linkedstackdao.model.Book;
 
 import java.time.LocalDate;
 
