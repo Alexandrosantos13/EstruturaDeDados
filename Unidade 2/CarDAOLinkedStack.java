@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 public class CarDAOLinkedStack implements CarDAO {
 
     private Stackable<Car> StackCars = new LinkedStack<>(20);
@@ -216,7 +217,27 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public Car[] getCarsByMomentArrival(LocalDateTime initialMoment, LocalDateTime finalMoment) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable <Car> TempStack = new LinkedStack<>();
+        Stackable <Car> resultStack = new LinkedStack<>();
+        int index = 0;
+        while (!StackCars.isEmpty()){
+            Car temp = StackCars.pop();
+            if (!temp.getArrived().isAfter(finalMoment)&&temp.getArrived().isBefore(initialMoment)){
+                resultStack.push(temp);
+                TempStack.push(temp);
+            }else{
+                TempStack.push(temp);
+            }
+        }
+         while (!TempStack.isEmpty()){
+                StackCars.push(TempStack.pop());
+            }
+        Car[] newlistCars = new Car[countelements(resultStack)];
+        while (!resultStack.isEmpty()){
+                newlistCars[index]=resultStack.pop();
+                index++;
+            }
+            return newlistCars;
     }
 
     // Operações de análise e estatísticas
