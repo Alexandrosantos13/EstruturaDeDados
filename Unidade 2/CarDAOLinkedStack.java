@@ -41,8 +41,21 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public void updateCar(Car newCar) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable<Car> TempStackCars = new LinkedStack<>(20);
+        while (!StackCars.isEmpty()){
+            Car car = StackCars.pop();
+            TempStackCars.push(car);
+            if (car.getCarByLicensePlate().equals(newCar.getCarByLicensePlate())){
+                TempStackCars.pop();
+                TempStackCars.push(newCar);
+                break;
+            }
+        }
+        while (!TempStackCars.isEmpty()){
+            StackCars.push(TempStackCars.pop());
+        }
     }
+
 
     @Override
     public Car deleteCar(String plateLicense) {
