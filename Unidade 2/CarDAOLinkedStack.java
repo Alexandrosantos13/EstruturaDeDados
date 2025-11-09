@@ -100,7 +100,7 @@ public class CarDAOLinkedStack implements CarDAO {
         Car result = null;
         while (!StackCars.isEmpty()){
             Car temp = StackCars.pop();
-            if (temp.getLicensePlate().equalsIgnoreCase(plateLicense)){
+            if (temp.getLicensePlate().equalsIgnoreCase(licensePlate)){
                 result = temp;
                 resultStack.push(temp);
             }else{
@@ -115,8 +115,29 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public Car[] getCarsByMark(String mark) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable <Car> TempStack = new LinkedStack<>();
+        Stackable <Car> resultStack = new LinkedStack<>();
+        int index = 0;
+        while (!StackCars.isEmpty()){
+            Car temp = StackCars.pop();
+            if (temp.getMark().equalsIgnoreCase(mark)){
+                resultStack.push(temp);
+                TempStack.push(temp);
+            }else{
+                TempStack.push(temp);
+            }
+        }
+        Car[] newlistCars = new Car[countelements(resultStack)];
+         while (!TempStack.isEmpty()){
+                StackCars.push(TempStack.pop());
+            }
+        while (!resultStack.isEmpty()){
+                newlistCars[index]=resultStack.pop();
+                index++;
+            }
+            return newlistCars;
     }
+    
 
     @Override
     public Car[] getCarsByModel(String model) {
