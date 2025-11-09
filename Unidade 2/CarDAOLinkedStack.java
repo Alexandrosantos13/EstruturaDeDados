@@ -26,7 +26,7 @@ public class CarDAOLinkedStack implements CarDAO {
             Car car = StackCars.pop();
             TempStackCars.push(car);
 
-            if (car.getCarByLicensePlate()==plateLicense){
+            if (car.getCarByLicensePlate().EqualsIgnoreCase(plateLicense)){
                 resultcar=car;
                 break;
             }
@@ -62,7 +62,14 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public Car deleteCar(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable <Car> tempStack = new LinkedStack<>();
+        Stackable <Car> resultStack = new LinkedStack<>();
+        while (!StackCars.isEmpty()){
+            Car temp = StackCars.pop();
+            if (temp.getLicensePlate()){
+
+            }
+        }
     }
 
     // Operações de consulta específicas para carros
