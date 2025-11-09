@@ -1,14 +1,17 @@
-package br.edu.ifba.vdc.bsi.linkedstackdao.dao;
-
-import br.edu.ifba.vdc.bsi.linkedstackdao.dao.repository.LinkedStack;
-import br.edu.ifba.vdc.bsi.linkedstackdao.dao.repository.Stackable;
-import br.edu.ifba.vdc.bsi.linkedstackdao.model.Car;
-import java.time.LocalDateTime;
-
 public class CarDAOLinkedStack implements CarDAO {
 
     private Stackable<Car> StackCars = new LinkedStack<>(20);
 
+
+    private Car [] stackToArray(Stackable<Car> Stacktemp){
+            Car [] resultArray = new Car [countelements(Stacktemp)];
+            int index = 0;
+            while (!Stacktemp.isEmpty()){
+                resultArray [index]=Stacktemp.pop();
+                index++;
+            }
+            return resultArray;
+    }
     // Operações básicas CRUD
     @Override
     public void addCar(Car car) {
