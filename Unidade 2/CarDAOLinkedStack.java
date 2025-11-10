@@ -284,7 +284,7 @@ public class CarDAOLinkedStack implements CarDAO {
     // Operações de relatório e estatísticas
     @Override
     public String printCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+                return StackCars.toString();
     }
 
     @Override
