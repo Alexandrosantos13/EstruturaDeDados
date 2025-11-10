@@ -321,7 +321,31 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public String getMostPopularModel() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        HashMap<String, Integer> modelos = new HashMap<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        int modelopopular = 0;
+        String modelopopstring = null;
+        while (!StackCars.isEmpty()) {
+            Car temp = StackCars.pop();
+            TempStack.push(temp);
+            if (!modelos.containsKey(temp.getMark().toUpperCase())) {
+                modelos.put(temp.getMark().toUpperCase(), 1);
+                if (modelos.get(temp.getMark().toUpperCase()) > modelopopular) {
+                    modelopopular = modelos.get(temp.getMark().toUpperCase());
+                  modelopopstring = temp.getMark();
+                }
+            } else {
+                modelos.put(temp.getMark().toUpperCase(), modelos.get(temp.getMark().toUpperCase()) + 1);
+                if (modelos.get(temp.getMark().toUpperCase()) > modelopopular) {
+                   modelopopular = modelos.get(temp.getMark().toUpperCase());
+                    modelopopstring = temp.getMark();
+                }
+            }
+        }
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
+        return modelopopstring;;
     }
 
     @Override
