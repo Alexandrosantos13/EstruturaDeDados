@@ -535,6 +535,25 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public Car[] getCarsWithLongParking(long thresholdHours) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable<Car> tempStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
+        LocalDateTime horalocal = LocalDateTime.now();
+        int index = 0;
+        while(!StackCars.isEmpty()){
+            Car temp = StackCars.pop();
+            tempStack.push(temp);
+            if (temp.getArrived()!=null){
+                long tempoestac = Duration.between(temp.getArrived(), horalocal).toHours();
+                if (tempoestac >= thresholdHours){
+                    resultStack.push(temp);
+                }
+            }
+        }
+        Car [] resultlist = new Car[resultStack.getSize()];
+        while (!resultStack.isEmpty()){
+            resultlist[index]= resultStack.pop();
+            index++;
+        }
+        return resultlist;
     }
 }
