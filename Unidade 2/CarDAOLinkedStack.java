@@ -397,7 +397,9 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public void clearAllCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        while (!StackCars.isEmpty()) {
+            StackCars.pop();
+        }
     }
 
     @Override
