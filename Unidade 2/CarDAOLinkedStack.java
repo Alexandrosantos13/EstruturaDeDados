@@ -345,12 +345,36 @@ public class CarDAOLinkedStack implements CarDAO {
         while (!TempStack.isEmpty()) {
             StackCars.push(TempStack.pop());
         }
-        return modelopopstring;;
+        return modelopopstring;
     }
 
     @Override
     public String getMostPopularColor() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        HashMap<String, Integer> cores = new HashMap<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        int corpopular = 0;
+        String corpopstring = null;
+        while (!StackCars.isEmpty()) {
+            Car temp = StackCars.pop();
+            TempStack.push(temp);
+            if (!cores.containsKey(temp.getMark().toUpperCase())) {
+                cores.put(temp.getMark().toUpperCase(), 1);
+                if (cores.get(temp.getMark().toUpperCase()) > corpopular) {
+                    corpopular = cores.get(temp.getMark().toUpperCase());
+                    corpopstring = temp.getMark();
+                }
+            } else {
+                cores.put(temp.getMark().toUpperCase(), cores.get(temp.getMark().toUpperCase()) + 1);
+                if (cores.get(temp.getMark().toUpperCase()) > corpopular) {
+                    corpopular = cores.get(temp.getMark().toUpperCase());
+                    corpopstring = temp.getMark();
+                }
+            }
+        }
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
+        return corpopstring;
     }
 
     // Operações de gerenciamento
