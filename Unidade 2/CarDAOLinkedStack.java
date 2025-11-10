@@ -263,7 +263,22 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public Car getCarByOldestArrival() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Car result = null;
+        Stackable <Car> tempStack = new LinkedStack<>();
+        while (!StackCars.isEmpty()){
+            Car temp = StackCars.pop();
+            tempStack.push(temp);
+            if (result ==null && temp.getArrived()!=null){
+                result=temp;
+            }
+            else if (result != null && temp.getArrived() != null && temp.getArrived().isBefore(result.getArrived())){
+                result=temp;
+            }
+        }
+        while (!tempStack.isEmpty()){
+            StackCars.push(tempStack.pop());
+        }
+        return result;
     }
 
     // Operações de relatório e estatísticas
