@@ -380,7 +380,19 @@ public class CarDAOLinkedStack implements CarDAO {
     // Operações de gerenciamento
     @Override
     public boolean isCarInPlaced(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable <Car> tempStack = new LinkedStack<>();
+        boolean Switch = false;
+        while (!StackCars.isEmpty() && Switch==false){
+            Car temp = StackCars.pop();
+            tempStack.push(temp);
+            if (temp.getLicensePlate()!=null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)){
+                Switch=true;
+            }
+        }
+        while (!tempStack.isEmpty()){
+            StackCars.push(tempStack.pop());
+        }
+        return Switch;
     }
 
     @Override
