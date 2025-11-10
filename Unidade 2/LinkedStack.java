@@ -41,6 +41,10 @@ public class LinkedStack<T> implements Stackable<T> {
 	public int  getMaxCapacity(){
 		return this.length;
 	}
+	@Override
+	public int getSize(){
+		return this.amount;
+	}
 	/**
 	 * Adiciona um elemento ao topo da pilha.
 	 *

@@ -1,6 +1,5 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 public class CarDAOLinkedStack implements CarDAO {
@@ -9,27 +8,21 @@ public class CarDAOLinkedStack implements CarDAO {
 
     /* Métodos auxiliares */
     private Car[] stackToArray(Stackable<Car> Stack) {
-        Car[] resultArray = new Car[countelements(Stack)];
+        Stackable <Car> tempStack = new LinkedStack<>();
+        Car[] resultArray = new Car[Stack.getSize()];
         int index = 0;
         while (!Stack.isEmpty()) {
-            resultArray[index] = Stack.pop();
+            Car temp = Stack.pop();
+            resultArray[index] = temp;
             index++;
+            tempStack.push(temp);
+        }
+        while (!tempStack.isEmpty()) {
+             Stack.push(tempStack.pop());
         }
         return resultArray;
     }
 
-    private int countelements(Stackable<Car> Stack) {
-        int result = 0;
-        Stackable<Car> Auxlist = new LinkedStack<>();
-        while (!Stack.isEmpty()) {
-            Auxlist.push(Stack.pop());
-            result++;
-        }
-        while (!Auxlist.isEmpty()) {
-            Stack.push(Auxlist.pop());
-        }
-        return result;
-    }
 
     // Operações básicas CRUD
     @Override
@@ -130,7 +123,7 @@ public class CarDAOLinkedStack implements CarDAO {
                 TempStack.push(temp);
             }
         }
-        Car[] newlistCars = new Car[countelements(resultStack)];
+        Car[] newlistCars = new Car[resultStack.getSize()];
         while (!TempStack.isEmpty()) {
             StackCars.push(TempStack.pop());
         }
@@ -158,7 +151,7 @@ public class CarDAOLinkedStack implements CarDAO {
         while (!TempStack.isEmpty()) {
             StackCars.push(TempStack.pop());
         }
-        Car[] newlistCars = new Car[countelements(resultStack)];
+        Car[] newlistCars = new Car[resultStack.getSize()];
         while (!resultStack.isEmpty()) {
             newlistCars[index] = resultStack.pop();
             index++;
@@ -183,7 +176,7 @@ public class CarDAOLinkedStack implements CarDAO {
         while (!TempStack.isEmpty()) {
             StackCars.push(TempStack.pop());
         }
-        Car[] newlistCars = new Car[countelements(resultStack)];
+        Car[] newlistCars = new Car[resultStack.getSize()];
         while (!resultStack.isEmpty()) {
             newlistCars[index] = resultStack.pop();
             index++;
@@ -208,7 +201,7 @@ public class CarDAOLinkedStack implements CarDAO {
         while (!TempStack.isEmpty()) {
             StackCars.push(TempStack.pop());
         }
-        Car[] newlistCars = new Car[countelements(resultStack)];
+        Car[] newlistCars = new Car[resultStack.getSize()];
         while (!resultStack.isEmpty()) {
             newlistCars[index] = resultStack.pop();
             index++;
@@ -233,7 +226,7 @@ public class CarDAOLinkedStack implements CarDAO {
         while (!TempStack.isEmpty()) {
             StackCars.push(TempStack.pop());
         }
-        Car[] newlistCars = new Car[countelements(resultStack)];
+        Car[] newlistCars = new Car[resultStack.getSize()];
         while (!resultStack.isEmpty()) {
             newlistCars[index] = resultStack.pop();
             index++;
@@ -288,7 +281,7 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public int getTotalCars() {
-        return countelements(StackCars);
+        return StackCars.getSize();
     }
 
     @Override
@@ -437,7 +430,7 @@ public class CarDAOLinkedStack implements CarDAO {
             StackCars.push(tempStack.pop());
         }
 
-        Car[] resultlist = new Car[countelements(resultstack)];
+        Car[] resultlist = new Car[resultstack.getSize()];
         while (!resultstack.isEmpty()) {
             resultlist[index] = resultstack.pop();
             index++;
@@ -447,7 +440,7 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public int getAvailableSpaces() {
-        int availableSpaces = StackCars.getMaxCapacity()- countelements(StackCars);
+        int availableSpaces = StackCars.getMaxCapacity()- StackCars.getSize();
         return availableSpaces;
     }
 

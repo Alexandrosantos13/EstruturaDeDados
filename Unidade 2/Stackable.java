@@ -18,4 +18,5 @@ public interface Stackable<T> {
     boolean isFull();
     String toString();
     int getMaxCapacity();
+    int getSize();
 }
