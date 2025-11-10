@@ -1,32 +1,34 @@
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashMap;
+
 public class CarDAOLinkedStack implements CarDAO {
 
     private Stackable<Car> StackCars = new LinkedStack<>(20);
 
-    /*Métodos auxiliares */
-    private Car [] stackToArray(Stackable<Car> Stack){
-            Car [] resultArray = new Car [countelements(Stack)];
-            int index = 0;
-            while (!Stack.isEmpty()){
-                resultArray [index]=Stack.pop();
-                index++;
-            }
-            return resultArray;
+    /* Métodos auxiliares */
+    private Car[] stackToArray(Stackable<Car> Stack) {
+        Car[] resultArray = new Car[countelements(Stack)];
+        int index = 0;
+        while (!Stack.isEmpty()) {
+            resultArray[index] = Stack.pop();
+            index++;
+        }
+        return resultArray;
     }
 
-    private int countelements (Stackable <Car> Stack){
-       int result = 0;
-       Stackable <Car> Auxlist = new LinkedStack<>();
-        while (!Stack.isEmpty()){
+    private int countelements(Stackable<Car> Stack) {
+        int result = 0;
+        Stackable<Car> Auxlist = new LinkedStack<>();
+        while (!Stack.isEmpty()) {
             Auxlist.push(Stack.pop());
             result++;
         }
-        while (!Auxlist.isEmpty()){
+        while (!Auxlist.isEmpty()) {
             Stack.push(Auxlist.pop());
         }
         return result;
     }
-
 
     // Operações básicas CRUD
     @Override
@@ -38,16 +40,16 @@ public class CarDAOLinkedStack implements CarDAO {
     public Car getCar(String plateLicense) {
         Stackable<Car> TempStackCars = new LinkedStack<>(20);
         Car resultcar = null;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car car = StackCars.pop();
             TempStackCars.push(car);
 
-            if (car.getLicensePlate()!=null&&car.getLicensePlate().equalsIgnoreCase(plateLicense)){
-                resultcar=car;
+            if (car.getLicensePlate() != null && car.getLicensePlate().equalsIgnoreCase(plateLicense)) {
+                resultcar = car;
                 break;
             }
         }
-        while (!TempStackCars.isEmpty()){
+        while (!TempStackCars.isEmpty()) {
             StackCars.push(TempStackCars.pop());
         }
         return resultcar;
@@ -61,201 +63,198 @@ public class CarDAOLinkedStack implements CarDAO {
     @Override
     public void updateCar(Car newCar) {
         Stackable<Car> TempStackCars = new LinkedStack<>(20);
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car car = StackCars.pop();
             TempStackCars.push(car);
-            if (car.getLicensePlate().equals(newCar.getLicensePlate())){
+            if (car.getLicensePlate().equals(newCar.getLicensePlate())) {
                 TempStackCars.pop();
                 TempStackCars.push(newCar);
                 break;
             }
         }
-        while (!TempStackCars.isEmpty()){
+        while (!TempStackCars.isEmpty()) {
             StackCars.push(TempStackCars.pop());
         }
     }
 
     @Override
     public Car deleteCar(String plateLicense) {
-        Stackable <Car> resultStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
         Car result = null;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getLicensePlate().equalsIgnoreCase(plateLicense)){
+            if (temp.getLicensePlate().equalsIgnoreCase(plateLicense)) {
                 result = temp;
-            }else{
+            } else {
                 resultStack.push(temp);
             }
         }
-         while (!resultStack.isEmpty()){
-                StackCars.push(resultStack.pop());
-            }
-            return result;
+        while (!resultStack.isEmpty()) {
+            StackCars.push(resultStack.pop());
+        }
+        return result;
     }
-
 
     // Operações de consulta específicas para carros
     @Override
     public Car getCarByLicensePlate(String licensePlate) {
-        Stackable <Car> resultStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
         Car result = null;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getLicensePlate().equalsIgnoreCase(licensePlate)){
+            if (temp.getLicensePlate().equalsIgnoreCase(licensePlate)) {
                 result = temp;
                 resultStack.push(temp);
-            }else{
+            } else {
                 resultStack.push(temp);
             }
         }
-         while (!resultStack.isEmpty()){
-                StackCars.push(resultStack.pop());
-            }
-            return result;
+        while (!resultStack.isEmpty()) {
+            StackCars.push(resultStack.pop());
+        }
+        return result;
     }
 
     @Override
     public Car[] getCarsByMark(String mark) {
-        Stackable <Car> TempStack = new LinkedStack<>();
-        Stackable <Car> resultStack = new LinkedStack<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
         int index = 0;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getMark().equalsIgnoreCase(mark)){
+            if (temp.getMark().equalsIgnoreCase(mark)) {
                 resultStack.push(temp);
                 TempStack.push(temp);
-            }else{
+            } else {
                 TempStack.push(temp);
             }
         }
         Car[] newlistCars = new Car[countelements(resultStack)];
-         while (!TempStack.isEmpty()){
-                StackCars.push(TempStack.pop());
-            }
-        while (!resultStack.isEmpty()){
-                newlistCars[index]=resultStack.pop();
-                index++;
-            }
-            return newlistCars;
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
+        while (!resultStack.isEmpty()) {
+            newlistCars[index] = resultStack.pop();
+            index++;
+        }
+        return newlistCars;
     }
-    
 
     @Override
     public Car[] getCarsByModel(String model) {
-        Stackable <Car> TempStack = new LinkedStack<>();
-        Stackable <Car> resultStack = new LinkedStack<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
         int index = 0;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getModel().equalsIgnoreCase(model)){
+            if (temp.getModel().equalsIgnoreCase(model)) {
                 resultStack.push(temp);
                 TempStack.push(temp);
-            }else{
+            } else {
                 TempStack.push(temp);
             }
         }
-         while (!TempStack.isEmpty()){
-                StackCars.push(TempStack.pop());
-            }
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
         Car[] newlistCars = new Car[countelements(resultStack)];
-        while (!resultStack.isEmpty()){
-                newlistCars[index]=resultStack.pop();
-                index++;
-            }
-            return newlistCars;
+        while (!resultStack.isEmpty()) {
+            newlistCars[index] = resultStack.pop();
+            index++;
+        }
+        return newlistCars;
     }
 
     @Override
     public Car[] getCarsByColor(String color) {
-        Stackable <Car> TempStack = new LinkedStack<>();
-        Stackable <Car> resultStack = new LinkedStack<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
         int index = 0;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getColor().equalsIgnoreCase(color)){
+            if (temp.getColor().equalsIgnoreCase(color)) {
                 resultStack.push(temp);
                 TempStack.push(temp);
-            }else{
+            } else {
                 TempStack.push(temp);
             }
         }
-         while (!TempStack.isEmpty()){
-                StackCars.push(TempStack.pop());
-            }
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
         Car[] newlistCars = new Car[countelements(resultStack)];
-        while (!resultStack.isEmpty()){
-                newlistCars[index]=resultStack.pop();
-                index++;
-            }
-            return newlistCars;
+        while (!resultStack.isEmpty()) {
+            newlistCars[index] = resultStack.pop();
+            index++;
+        }
+        return newlistCars;
     }
 
     @Override
     public Car[] getCarsByOwner(String owner) {
-        Stackable <Car> TempStack = new LinkedStack<>();
-        Stackable <Car> resultStack = new LinkedStack<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
         int index = 0;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getOwnerName().equalsIgnoreCase(owner)){
+            if (temp.getOwnerName().equalsIgnoreCase(owner)) {
                 resultStack.push(temp);
                 TempStack.push(temp);
-            }else{
+            } else {
                 TempStack.push(temp);
             }
         }
-         while (!TempStack.isEmpty()){
-                StackCars.push(TempStack.pop());
-            }
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
         Car[] newlistCars = new Car[countelements(resultStack)];
-        while (!resultStack.isEmpty()){
-                newlistCars[index]=resultStack.pop();
-                index++;
-            }
-            return newlistCars;
+        while (!resultStack.isEmpty()) {
+            newlistCars[index] = resultStack.pop();
+            index++;
+        }
+        return newlistCars;
     }
 
     @Override
     public Car[] getCarsByMomentArrival(LocalDateTime initialMoment, LocalDateTime finalMoment) {
-        Stackable <Car> TempStack = new LinkedStack<>();
-        Stackable <Car> resultStack = new LinkedStack<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        Stackable<Car> resultStack = new LinkedStack<>();
         int index = 0;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (!temp.getArrived().isAfter(finalMoment)&&temp.getArrived().isBefore(initialMoment)){
+            if (!temp.getArrived().isAfter(finalMoment) && temp.getArrived().isBefore(initialMoment)) {
                 resultStack.push(temp);
                 TempStack.push(temp);
-            }else{
+            } else {
                 TempStack.push(temp);
             }
         }
-         while (!TempStack.isEmpty()){
-                StackCars.push(TempStack.pop());
-            }
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
         Car[] newlistCars = new Car[countelements(resultStack)];
-        while (!resultStack.isEmpty()){
-                newlistCars[index]=resultStack.pop();
-                index++;
-            }
-            return newlistCars;
+        while (!resultStack.isEmpty()) {
+            newlistCars[index] = resultStack.pop();
+            index++;
+        }
+        return newlistCars;
     }
 
     // Operações de análise e estatísticas
     @Override
     public Car getCarByNewestArrival() {
         Car result = null;
-        Stackable <Car> tempStack = new LinkedStack<>();
-        while (!StackCars.isEmpty()){
+        Stackable<Car> tempStack = new LinkedStack<>();
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
             tempStack.push(temp);
-            if (result ==null && temp.getArrived()!=null){
-                result=temp;
-            }
-            else if (result != null && temp.getArrived() != null && temp.getArrived().isAfter(result.getArrived())){
-                result=temp;
+            if (result == null && temp.getArrived() != null) {
+                result = temp;
+            } else if (result != null && temp.getArrived() != null && temp.getArrived().isAfter(result.getArrived())) {
+                result = temp;
             }
         }
-        while (!tempStack.isEmpty()){
+        while (!tempStack.isEmpty()) {
             StackCars.push(tempStack.pop());
         }
         return result;
@@ -264,18 +263,17 @@ public class CarDAOLinkedStack implements CarDAO {
     @Override
     public Car getCarByOldestArrival() {
         Car result = null;
-        Stackable <Car> tempStack = new LinkedStack<>();
-        while (!StackCars.isEmpty()){
+        Stackable<Car> tempStack = new LinkedStack<>();
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
             tempStack.push(temp);
-            if (result ==null && temp.getArrived()!=null){
-                result=temp;
-            }
-            else if (result != null && temp.getArrived() != null && temp.getArrived().isBefore(result.getArrived())){
-                result=temp;
+            if (result == null && temp.getArrived() != null) {
+                result = temp;
+            } else if (result != null && temp.getArrived() != null && temp.getArrived().isBefore(result.getArrived())) {
+                result = temp;
             }
         }
-        while (!tempStack.isEmpty()){
+        while (!tempStack.isEmpty()) {
             StackCars.push(tempStack.pop());
         }
         return result;
@@ -284,17 +282,41 @@ public class CarDAOLinkedStack implements CarDAO {
     // Operações de relatório e estatísticas
     @Override
     public String printCars() {
-                return StackCars.toString();
+        return StackCars.toString();
     }
 
     @Override
     public int getTotalCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return countelements(StackCars);
     }
 
     @Override
     public String getMostPopularMark() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        HashMap<String, Integer> marcas = new HashMap<>();
+        Stackable<Car> TempStack = new LinkedStack<>();
+        int marcapopular = 0;
+        String marcapopstring = null;
+        while (!StackCars.isEmpty()) {
+            Car temp = StackCars.pop();
+            TempStack.push(temp);
+            if (!marcas.containsKey(temp.getMark().toUpperCase())) {
+                marcas.put(temp.getMark().toUpperCase(), 1);
+                if (marcas.get(temp.getMark().toUpperCase()) > marcapopular) {
+                    marcapopular = marcas.get(temp.getMark().toUpperCase());
+                    marcapopstring = temp.getMark();
+                }
+            } else {
+                marcas.put(temp.getMark().toUpperCase(), marcas.get(temp.getMark().toUpperCase()) + 1);
+                if (marcas.get(temp.getMark().toUpperCase()) > marcapopular) {
+                    marcapopular = marcas.get(temp.getMark().toUpperCase());
+                    marcapopstring = temp.getMark();
+                }
+            }
+        }
+        while (!TempStack.isEmpty()) {
+            StackCars.push(TempStack.pop());
+        }
+        return marcapopstring;
     }
 
     @Override
