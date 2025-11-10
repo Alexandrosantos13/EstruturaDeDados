@@ -1,5 +1,5 @@
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 public class CarDAOLinkedStack implements CarDAO {
@@ -404,7 +404,16 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public void removeCarsOlderThan(LocalDateTime date) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable <Car> tempStack = new LinkedStack<>();
+        while (!StackCars.isEmpty()){
+            Car temp = StackCars.pop();
+            if (temp.getArrived()!=null && !temp.getArrived().isBefore(date)){
+                tempStack.push(temp);
+            }
+        }
+        while (!tempStack.isEmpty()){
+            StackCars.push(tempStack.pop());
+        }
     }
 
     @Override
