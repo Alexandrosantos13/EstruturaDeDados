@@ -510,7 +510,27 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public long getAverageArrivalTime() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable<Car> tempStack = new LinkedStack<>();
+        LocalDateTime horalocal = LocalDateTime.now();
+        Long duracaototal=0L;
+        Long result = 0L;
+        int carrosvalidos = 0;
+        while (!StackCars.isEmpty()){
+            Car temp = StackCars.pop();
+            tempStack.push(temp);
+            if (temp.getArrived()!=null){
+                duracaototal += Duration.between(temp.getArrived(), horalocal).toHours();
+                carrosvalidos++;
+        }
+    }
+         while (!tempStack.isEmpty()) {
+            StackCars.push(tempStack.pop());
+        }
+        if (carrosvalidos == 0){
+            return 0L;
+        }
+        result=duracaototal/carrosvalidos;
+        return result;
     }
 
     @Override
