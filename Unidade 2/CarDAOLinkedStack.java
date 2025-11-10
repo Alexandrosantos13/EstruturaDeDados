@@ -446,17 +446,21 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public boolean isParkingEmpty() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        boolean result = true;
+        if (StackCars.getSize()>0){
+            result = false;
+        }
+        return result;
     }
 
     @Override
     public int getMaxCapacity() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        
     }
 
     @Override
     public int getOccupancyRate() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        
     }
 
     @Override
