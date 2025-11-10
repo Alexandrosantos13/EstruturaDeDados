@@ -8,7 +8,7 @@ public class CarDAOLinkedStack implements CarDAO {
 
     /* Métodos auxiliares */
     private Car[] stackToArray(Stackable<Car> Stack) {
-        Stackable <Car> tempStack = new LinkedStack<>();
+        Stackable<Car> tempStack = new LinkedStack<>();
         Car[] resultArray = new Car[Stack.getSize()];
         int index = 0;
         while (!Stack.isEmpty()) {
@@ -18,11 +18,10 @@ public class CarDAOLinkedStack implements CarDAO {
             tempStack.push(temp);
         }
         while (!tempStack.isEmpty()) {
-             Stack.push(tempStack.pop());
+            Stack.push(tempStack.pop());
         }
         return resultArray;
     }
-
 
     // Operações básicas CRUD
     @Override
@@ -440,14 +439,14 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public int getAvailableSpaces() {
-        int availableSpaces = StackCars.getMaxCapacity()- StackCars.getSize();
+        int availableSpaces = StackCars.getMaxCapacity() - StackCars.getSize();
         return availableSpaces;
     }
 
     @Override
     public boolean isParkingEmpty() {
         boolean result = true;
-        if (StackCars.getSize()>0){
+        if (StackCars.getSize() > 0) {
             result = false;
         }
         return result;
@@ -460,14 +459,14 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public int getOccupancyRate() {
-        int result = ((StackCars.getSize()/StackCars.getSize())/100);
+        int result = ((StackCars.getSize() / StackCars.getSize()) / 100);
         return result;
     }
 
     @Override
     public boolean isParkingFull() {
         boolean result = false;
-        if (StackCars.getSize()==StackCars.getMaxCapacity()){
+        if (StackCars.getSize() == StackCars.getMaxCapacity()) {
             result = true;
         }
         return result;
@@ -475,7 +474,22 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public long getParkingDuration(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        LocalDateTime horalocal = LocalDateTime.now();
+        Stackable<Car> tempStack = new LinkedStack<>();
+        Long duracao = 0L;
+        while (!StackCars.isEmpty()) {
+            Car temp = StackCars.pop();
+            tempStack.push(temp);
+            if (temp.getLicensePlate() !=null && temp.getArrived() !=null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)) {
+                duracao = Duration.between(temp.getArrived(), horalocal).toHours();
+                break;
+            }
+        }
+
+        while (!tempStack.isEmpty()) {
+            StackCars.push(tempStack.pop());
+        }
+        return duracao;
     }
 
     @Override
