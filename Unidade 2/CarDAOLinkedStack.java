@@ -494,7 +494,18 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public void removeCarsByOwner(String owner) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Stackable<Car> tempStack = new LinkedStack<>();
+         while (!StackCars.isEmpty()) {
+            Car temp = StackCars.pop();
+            if (temp.getOwnerName()!=null && !temp.getOwnerName().equalsIgnoreCase(owner)){
+                tempStack.push(temp);
+            }else if (temp.getOwnerName()==null){
+                tempStack.push(temp);
+            }
+         }
+          while (!tempStack.isEmpty()) {
+            StackCars.push(tempStack.pop());
+        }
     }
 
     @Override
