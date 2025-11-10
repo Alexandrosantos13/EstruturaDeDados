@@ -447,7 +447,8 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public int getAvailableSpaces() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        int availableSpaces = StackCars.getMaxCapacity()- countelements(StackCars);
+        return availableSpaces;
     }
 
     @Override

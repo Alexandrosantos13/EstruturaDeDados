@@ -19,7 +19,6 @@ public class LinkedStack<T> implements Stackable<T> {
 
     /** Tamanho máximo da pilha */
     private int length;
-
 	/**
 	 * Construtor padrão que cria uma pilha com capacidade para 10 elementos.
 	 */
@@ -37,7 +36,11 @@ public class LinkedStack<T> implements Stackable<T> {
 		amount = 0;
 		this.length = length;
     }
-  
+
+	@Override
+	public int  getMaxCapacity(){
+		return this.length;
+	}
 	/**
 	 * Adiciona um elemento ao topo da pilha.
 	 *
