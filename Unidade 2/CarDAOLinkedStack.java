@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -332,12 +333,12 @@ public class CarDAOLinkedStack implements CarDAO {
                 modelos.put(temp.getMark().toUpperCase(), 1);
                 if (modelos.get(temp.getMark().toUpperCase()) > modelopopular) {
                     modelopopular = modelos.get(temp.getMark().toUpperCase());
-                  modelopopstring = temp.getMark();
+                    modelopopstring = temp.getMark();
                 }
             } else {
                 modelos.put(temp.getMark().toUpperCase(), modelos.get(temp.getMark().toUpperCase()) + 1);
                 if (modelos.get(temp.getMark().toUpperCase()) > modelopopular) {
-                   modelopopular = modelos.get(temp.getMark().toUpperCase());
+                    modelopopular = modelos.get(temp.getMark().toUpperCase());
                     modelopopstring = temp.getMark();
                 }
             }
@@ -380,16 +381,16 @@ public class CarDAOLinkedStack implements CarDAO {
     // Operações de gerenciamento
     @Override
     public boolean isCarInPlaced(String plateLicense) {
-        Stackable <Car> tempStack = new LinkedStack<>();
+        Stackable<Car> tempStack = new LinkedStack<>();
         boolean Switch = false;
-        while (!StackCars.isEmpty() && Switch==false){
+        while (!StackCars.isEmpty() && Switch == false) {
             Car temp = StackCars.pop();
             tempStack.push(temp);
-            if (temp.getLicensePlate()!=null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)){
-                Switch=true;
+            if (temp.getLicensePlate() != null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)) {
+                Switch = true;
             }
         }
-        while (!tempStack.isEmpty()){
+        while (!tempStack.isEmpty()) {
             StackCars.push(tempStack.pop());
         }
         return Switch;
@@ -404,21 +405,44 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public void removeCarsOlderThan(LocalDateTime date) {
-        Stackable <Car> tempStack = new LinkedStack<>();
-        while (!StackCars.isEmpty()){
+        Stackable<Car> tempStack = new LinkedStack<>();
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getArrived()!=null && !temp.getArrived().isBefore(date)){
+            if (temp.getArrived() != null && !temp.getArrived().isBefore(date)) {
                 tempStack.push(temp);
             }
         }
-        while (!tempStack.isEmpty()){
+        while (!tempStack.isEmpty()) {
             StackCars.push(tempStack.pop());
         }
     }
 
     @Override
     public Car[] getCarsByParkingDuration(long minHours, long maxHours) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        LocalDateTime horalocal = LocalDateTime.now();
+        Stackable<Car> tempStack = new LinkedStack<>();
+        Stackable<Car> resultstack = new LinkedStack<>();
+        int index = 0;
+        while (!StackCars.isEmpty()) {
+            Car temp = StackCars.pop();
+            tempStack.push(temp);
+            if (temp.getArrived() != null) {
+                long comparacao = Duration.between(temp.getArrived(), horalocal).toHours();
+                if (comparacao >= minHours && comparacao <= maxHours) {
+                    resultstack.push(temp);
+                }
+            }
+        }
+        while (!tempStack.isEmpty()) {
+            StackCars.push(tempStack.pop());
+        }
+
+        Car[] resultlist = new Car[countelements(resultstack)];
+        while (!resultstack.isEmpty()) {
+            resultlist[index] = resultstack.pop();
+            index++;
+        }
+        return resultlist;
     }
 
     @Override
