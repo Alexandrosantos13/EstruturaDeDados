@@ -14,7 +14,7 @@ public class CarDAOLinkedList implements CarDAO {
     @Override
     public Car getCar(String plateLicense) {
         Car car = getCarByLicensePlate(plateLicense);
-        return car; 
+        return car;
     }
 
     @Override
@@ -24,7 +24,16 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public void updateCar(Car newCar) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (newCar==null || newCar.getLicensePlate()==null){
+            throw new NullPointerException ("O carro está vazio");
+        }else{
+            for (int i = 0; i<cars.size(); i++){
+            if (cars.select(i).getLicensePlate()!= null && cars.select(i).getLicensePlate().equalsIgnoreCase(newCar.getLicensePlate())){
+                cars.update(i, newCar);
+                break;
+            }
+        }
+     }
     }
 
     @Override
@@ -35,8 +44,8 @@ public class CarDAOLinkedList implements CarDAO {
     // Operações de consulta específicas para carros
     @Override
     public Car getCarByLicensePlate(String licensePlate) {
-        for (int i = 0; i<cars.size(); i++){
-            if (cars.select(i).getLicensePlate().equalsIgnoreCase(licensePlate)){
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.select(i).getLicensePlate().equalsIgnoreCase(licensePlate)) {
                 return cars.select(i);
             }
         }
@@ -45,9 +54,9 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByMark(String mark) {
-        Listable <Car> resultList = new LinkedList<>();
-         for (int i = 0; i<cars.size(); i++){
-            if (cars.select(i).getMark().equalsIgnoreCase(mark)){
+        Listable<Car> resultList = new LinkedList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.select(i).getMark().equalsIgnoreCase(mark)) {
                 resultList.append(cars.select(i));
             }
         }
@@ -56,21 +65,20 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByModel(String model) {
-        Listable <Car> resultList = new LinkedList<>();
-         for (int i = 0; i<cars.size(); i++){
-            if (cars.select(i).getModel().equalsIgnoreCase(model)){
+        Listable<Car> resultList = new LinkedList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.select(i).getModel().equalsIgnoreCase(model)) {
                 resultList.append(cars.select(i));
             }
         }
         return listToArray(resultList);
     }
-    
 
     @Override
     public Car[] getCarsByColor(String color) {
-        Listable <Car> resultList = new LinkedList<>();
-         for (int i = 0; i<cars.size(); i++){
-            if (cars.select(i).getColor().equalsIgnoreCase(color)){
+        Listable<Car> resultList = new LinkedList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.select(i).getColor().equalsIgnoreCase(color)) {
                 resultList.append(cars.select(i));
             }
         }
@@ -79,9 +87,9 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByOwner(String owner) {
-        Listable <Car> resultList = new LinkedList<>();
-         for (int i = 0; i<cars.size(); i++){
-            if (cars.select(i).getOwnerName().equalsIgnoreCase(owner)){
+        Listable<Car> resultList = new LinkedList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.select(i).getOwnerName().equalsIgnoreCase(owner)) {
                 resultList.append(cars.select(i));
             }
         }
@@ -90,13 +98,14 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByMomentArrival(LocalDateTime initialMoment, LocalDateTime finalMoment) {
-       Listable <Car> resultList = new LinkedList<>();
-        for (int i = 0; i<cars.size(); i++){
-            if (!cars.select(i).getArrived().isAfter(finalMoment) && !cars.select(i).getArrived().isBefore(initialMoment)){
+        Listable<Car> resultList = new LinkedList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            if (!cars.select(i).getArrived().isAfter(finalMoment)
+                    && !cars.select(i).getArrived().isBefore(initialMoment)) {
                 resultList.append(cars.select(i));
             }
         }
-       return listToArray(resultList);
+        return listToArray(resultList);
     }
 
     // Operações de análise e estatísticas
@@ -201,7 +210,7 @@ public class CarDAOLinkedList implements CarDAO {
     public Car[] getCarsWithLongParking(long thresholdHours) {
         throw new UnsupportedOperationException("Operação ainda não implementada");
     }
-    
+
     public Car[] listToArray(Listable<Car> lista) {
         return lista.selectAll();
     }
