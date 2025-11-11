@@ -44,7 +44,13 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByMark(String mark) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Listable <Car> resultList = new LinkedList<>();
+         for (int i = 0; i<cars.size(); i++){
+            if (cars.select(i).getMark().equalsIgnoreCase(mark)){
+                resultList.append(cars.select(i));
+            }
+        }
+        return listToArray(resultList);
     }
 
     @Override
@@ -168,5 +174,9 @@ public class CarDAOLinkedList implements CarDAO {
     @Override
     public Car[] getCarsWithLongParking(long thresholdHours) {
         throw new UnsupportedOperationException("Operação ainda não implementada");
+    }
+    
+    public Car[] listToArray(Listable<Car> lista) {
+        return lista.selectAll();
     }
 }
