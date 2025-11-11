@@ -247,12 +247,16 @@ public class CarDAOLinkedList implements CarDAO {
     // Operações de gerenciamento
     @Override
     public boolean isCarInPlaced(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (plateLicense != null && getCar(plateLicense) != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void clearAllCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        cars.clear();
     }
 
     @Override
