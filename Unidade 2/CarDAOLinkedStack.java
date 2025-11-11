@@ -459,7 +459,7 @@ public class CarDAOLinkedStack implements CarDAO {
 
     @Override
     public int getOccupancyRate() {
-        int result = ((StackCars.getSize() / StackCars.getSize()) / 100);
+        int result = ((StackCars.getMaxCapacity() / StackCars.getSize()) / 100);
         return result;
     }
 

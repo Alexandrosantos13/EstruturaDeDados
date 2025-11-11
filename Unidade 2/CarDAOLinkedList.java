@@ -310,7 +310,7 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public int getOccupancyRate() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return (cars.maxCapacity()/cars.size())*100;
     }
 
     @Override
