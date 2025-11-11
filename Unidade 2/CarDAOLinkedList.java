@@ -222,7 +222,26 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public String getMostPopularColor() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        HashMap<String, Integer> cores = new HashMap<>();
+        String cor = null;
+        int maxcor = 0;
+        for (int i = 0; i < cars.size(); i++) {
+            Car tempCar = cars.select(i);
+            if (tempCar.getModel() != null) {
+                String corAtual = tempCar.getModel().toUpperCase();
+                int contador = cores.getOrDefault(corAtual, 0) + 1;
+                cores.put(corAtual, contador);
+                if (contador > maxcor) {
+                    maxcor = contador;
+                    cor = corAtual;
+                }
+            }
+        }
+
+        return cor;
     }
 
     // Operações de gerenciamento
