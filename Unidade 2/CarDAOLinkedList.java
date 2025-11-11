@@ -1,5 +1,7 @@
 
+import java.nio.channels.IllegalSelectorException;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 public class CarDAOLinkedList implements CarDAO {
 
@@ -24,30 +26,32 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public void updateCar(Car newCar) {
-        if (newCar==null || newCar.getLicensePlate()==null){
-            throw new NullPointerException ("O carro está vazio");
-        }else{
-            for (int i = 0; i<cars.size(); i++){
-            if (cars.select(i).getLicensePlate()!= null && cars.select(i).getLicensePlate().equalsIgnoreCase(newCar.getLicensePlate())){
-                cars.update(i, newCar);
-                break;
+        if (newCar == null || newCar.getLicensePlate() == null) {
+            throw new NullPointerException("O carro está vazio");
+        } else {
+            for (int i = 0; i < cars.size(); i++) {
+                if (cars.select(i).getLicensePlate() != null
+                        && cars.select(i).getLicensePlate().equalsIgnoreCase(newCar.getLicensePlate())) {
+                    cars.update(i, newCar);
+                    break;
+                }
             }
         }
-     }
     }
 
     @Override
     public Car deleteCar(String plateLicense) {
-         if (plateLicense==null){
-            throw new IllegalArgumentException ("Placa Inválida");
-        }else{
-            for (int i = 0; i<cars.size(); i++){
-            if (cars.select(i).getLicensePlate()!= null && cars.select(i).getLicensePlate().equalsIgnoreCase(plateLicense)){
-                return cars.delete(i);
+        if (plateLicense == null) {
+            throw new IllegalArgumentException("Placa Inválida");
+        } else {
+            for (int i = 0; i < cars.size(); i++) {
+                if (cars.select(i).getLicensePlate() != null
+                        && cars.select(i).getLicensePlate().equalsIgnoreCase(plateLicense)) {
+                    return cars.delete(i);
+                }
             }
         }
-     }
-     return null;
+        return null;
     }
 
     // Operações de consulta específicas para carros
@@ -120,7 +124,21 @@ public class CarDAOLinkedList implements CarDAO {
     // Operações de análise e estatísticas
     @Override
     public Car getCarByNewestArrival() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.size() == 0) {
+            throw new NoSuchElementException("A lista esta vazia");
+        }
+        Car recentCar = null;
+        for (int i = 0; i < cars.size(); i++) {
+            Car tempCar = cars.select(i);
+            if (tempCar.getArrived() != null) {
+                if (recentCar == null) {
+                    recentCar = tempCar;
+                } else if (tempCar.getArrived().isAfter(recentCar.getArrived())) {
+                    recentCar = tempCar;
+                }
+            }
+        }
+        return recentCar;
     }
 
     @Override
