@@ -174,7 +174,26 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public String getMostPopularMark() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        HashMap<String, Integer> marcas = new HashMap<>();
+        String marcapopular = null;
+        int maxmarca = 0;
+        for (int i = 0; i < cars.size(); i++) {
+            Car tempCar = cars.select(i);
+            if (tempCar.getMark() != null) {
+                String marcaAtual = tempCar.getMark().toUpperCase();
+                int contador = marcas.getOrDefault(marcaAtual, 0) + 1;
+                marcas.put(marcaAtual, contador);
+                if (contador > maxmarca) {
+                    maxmarca = contador;
+                    marcapopular = marcaAtual;
+                }
+            }
+        }
+
+        return marcapopular;
     }
 
     @Override
