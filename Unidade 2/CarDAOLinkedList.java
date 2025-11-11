@@ -325,12 +325,16 @@ public class CarDAOLinkedList implements CarDAO {
     public long getParkingDuration(String plateLicense) {
         LocalDateTime horalocal = LocalDateTime.now();
         return Duration.between(getCarByLicensePlate(plateLicense).getArrived(), horalocal).toHours();
-
     }
 
     @Override
     public void removeCarsByOwner(String owner) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        for (int i = 0; i < cars.size(); i++) {
+            Car tempCar = cars.select(i);
+            if (tempCar!=null && tempCar.getOwnerName() != null && tempCar.getOwnerName().equalsIgnoreCase(owner)) {
+                cars.delete(i);
+                }
+            }
     }
 
     @Override
