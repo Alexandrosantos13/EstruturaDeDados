@@ -2,6 +2,7 @@
 import java.nio.channels.IllegalSelectorException;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+import java.util.HashMap;
 
 public class CarDAOLinkedList implements CarDAO {
 
@@ -143,18 +144,32 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car getCarByOldestArrival() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.size() == 0) {
+            throw new NoSuchElementException("A lista esta vazia");
+        }
+        Car oldCar = null;
+        for (int i = 0; i < cars.size(); i++) {
+            Car tempCar = cars.select(i);
+            if (tempCar.getArrived() != null) {
+                if (oldCar == null) {
+                    oldCar = tempCar;
+                } else if (tempCar.getArrived().isBefore(oldCar.getArrived())) {
+                    oldCar = tempCar;
+                }
+            }
+        }
+        return oldCar;
     }
 
     // Operações de relatório e estatísticas
     @Override
     public String printCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.print();
     }
 
     @Override
     public int getTotalCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.size();
     }
 
     @Override
