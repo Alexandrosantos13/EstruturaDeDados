@@ -38,7 +38,16 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car deleteCar(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+         if (plateLicense==null){
+            throw new IllegalArgumentException ("Placa Inválida");
+        }else{
+            for (int i = 0; i<cars.size(); i++){
+            if (cars.select(i).getLicensePlate()!= null && cars.select(i).getLicensePlate().equalsIgnoreCase(plateLicense)){
+                return cars.delete(i);
+            }
+        }
+     }
+     return null;
     }
 
     // Operações de consulta específicas para carros
