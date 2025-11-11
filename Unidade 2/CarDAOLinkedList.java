@@ -8,7 +8,7 @@ public class CarDAOLinkedList implements CarDAO {
     // Operações básicas CRUD
     @Override
     public void addCar(Car car) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        cars.append(car);
     }
 
     @Override
