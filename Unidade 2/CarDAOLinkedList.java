@@ -339,7 +339,12 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public long getAverageArrivalTime() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        int totalcarros = cars.size();
+        long totalhoras=0;
+        for (int i = 0; i < cars.size(); i++) {
+                totalhoras+=getParkingDuration(cars.select(i).getLicensePlate());
+            }
+        return totalhoras/totalcarros;
     }
 
     @Override
