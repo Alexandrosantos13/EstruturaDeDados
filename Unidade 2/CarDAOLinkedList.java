@@ -198,7 +198,26 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public String getMostPopularModel() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        HashMap<String, Integer> modelos = new HashMap<>();
+        String modelopopular = null;
+        int maxmodelo = 0;
+        for (int i = 0; i < cars.size(); i++) {
+            Car tempCar = cars.select(i);
+            if (tempCar.getModel() != null) {
+                String modeloAtual = tempCar.getModel().toUpperCase();
+                int contador = modelos.getOrDefault(modeloAtual, 0) + 1;
+                modelos.put(modeloAtual, contador);
+                if (contador > maxmodelo) {
+                    maxmodelo = contador;
+                    modelopopular = modeloAtual;
+                }
+            }
+        }
+
+        return modelopopular;
     }
 
     @Override
