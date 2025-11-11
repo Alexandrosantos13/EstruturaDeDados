@@ -78,7 +78,13 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByOwner(String owner) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Listable <Car> resultList = new LinkedList<>();
+         for (int i = 0; i<cars.size(); i++){
+            if (cars.select(i).getOwnerName().equalsIgnoreCase(owner)){
+                resultList.append(cars.select(i));
+            }
+        }
+        return listToArray(resultList);
     }
 
     @Override
