@@ -2,6 +2,7 @@
 import java.nio.channels.IllegalSelectorException;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+import java.time.Duration;
 import java.util.HashMap;
 
 public class CarDAOLinkedList implements CarDAO {
@@ -273,9 +274,22 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByParkingDuration(long minHours, long maxHours) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
-    }
-
+       LocalDateTime horalocal = LocalDateTime.now();
+       Listable <Car> result = new LinkedList<>();  
+       if (cars.isEmpty()){
+            throw new NoSuchElementException("Erro lista vazia");
+        }
+        for (int i = 0; i < cars.size() ; i++) {
+            if (cars.select(i).getArrived()!=null) {
+                long comparacao = Duration.between(cars.select(i).getArrived(), horalocal).toHours();
+                if (comparacao>=minHours && comparacao<=maxHours){
+                    result.append(cars.select(i));
+                }
+            }
+        }
+        return listToArray(result);
+    }   
+    
     @Override
     public int getAvailableSpaces() {
         throw new UnsupportedOperationException("Operação ainda não implementada");
