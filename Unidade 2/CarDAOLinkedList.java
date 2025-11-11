@@ -67,7 +67,13 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByColor(String color) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Listable <Car> resultList = new LinkedList<>();
+         for (int i = 0; i<cars.size(); i++){
+            if (cars.select(i).getColor().equalsIgnoreCase(color)){
+                resultList.append(cars.select(i));
+            }
+        }
+        return listToArray(resultList);
     }
 
     @Override
