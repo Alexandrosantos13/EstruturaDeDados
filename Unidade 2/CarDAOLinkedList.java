@@ -34,7 +34,12 @@ public class CarDAOLinkedList implements CarDAO {
     // Operações de consulta específicas para carros
     @Override
     public Car getCarByLicensePlate(String licensePlate) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        for (int i = 0; i<cars.size(); i++){
+            if (cars.select(i).getLicensePlate().equalsIgnoreCase(licensePlate)){
+                return cars.select(i);
+            }
+        }
+        return null;
     }
 
     @Override
