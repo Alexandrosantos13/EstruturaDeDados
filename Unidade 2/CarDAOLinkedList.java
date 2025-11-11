@@ -19,7 +19,7 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getAllCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.selectAll();
     }
 
     @Override
