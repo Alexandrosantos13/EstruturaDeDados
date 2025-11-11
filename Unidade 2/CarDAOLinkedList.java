@@ -261,7 +261,14 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public void removeCarsOlderThan(LocalDateTime date) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()){
+            throw new NoSuchElementException("Erro lista vazia");
+        }
+        for (int i = cars.size() - 1; i >= 0; i--) {
+            if (cars.select(i).getArrived()!=null && cars.select(i).getArrived().isBefore(date)) {
+                cars.delete(i);
+            }
+        }
     }
 
     @Override
@@ -276,7 +283,10 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public boolean isParkingEmpty() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -291,7 +301,10 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public boolean isParkingFull() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isFull()){
+            return true;
+        }
+        return false;
     }
 
     @Override
