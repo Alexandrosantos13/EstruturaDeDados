@@ -274,6 +274,11 @@ public class LinkedList<T> implements Listable<T> {
 		return (amount == length);
 	}
 
+	@Override
+	public int maxCapacity() {
+		return length;
+	}
+
 	/**
 	 * Retorna uma representação em string da lista.
 	 * Os elementos são separados por vírgula e delimitados por colchetes.

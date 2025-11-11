@@ -21,4 +21,5 @@ public interface Listable<T> {
     boolean isEmpty();          //Verifica se está vazia
     boolean isFull();           //Verifica se está cheia
     String print();             //Imprime lista do início ao fim
+    int maxCapacity();          //Retorna o tamanho da lista
 }
