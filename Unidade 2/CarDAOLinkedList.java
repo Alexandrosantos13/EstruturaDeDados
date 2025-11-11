@@ -349,7 +349,13 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsWithLongParking(long thresholdHours) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Listable <Car> result = new LinkedList<>();  
+        for (int i = 0; i < cars.size(); i++) {
+                if (getParkingDuration(cars.select(i).getLicensePlate())>thresholdHours){
+                    result.append(cars.select(i));
+                }
+            }
+            return listToArray(result);
     }
 
     public Car[] listToArray(Listable<Car> lista) {
