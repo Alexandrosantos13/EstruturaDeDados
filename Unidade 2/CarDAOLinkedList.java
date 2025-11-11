@@ -89,7 +89,13 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByMomentArrival(LocalDateTime initialMoment, LocalDateTime finalMoment) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+       Listable <Car> resultList = new LinkedList<>();
+        for (int i = 0; i<cars.size(); i++){
+            if (!cars.select(i).getArrived().isAfter(finalMoment) && !cars.select(i).getArrived().isBefore(initialMoment)){
+                resultList.append(cars.select(i));
+            }
+        }
+       return listToArray(resultList);
     }
 
     // Operações de análise e estatísticas
