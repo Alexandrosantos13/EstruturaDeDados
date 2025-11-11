@@ -13,7 +13,8 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car getCar(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Car car = getCarByLicensePlate(plateLicense);
+        return car; 
     }
 
     @Override
