@@ -222,7 +222,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public int getTotalCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.size();
     }
 
     @Override
