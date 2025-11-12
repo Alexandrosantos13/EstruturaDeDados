@@ -2,8 +2,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-import br.edu.ifba.vdc.bsi.linkeddequedao.dao.repository.LinkedDEQue;
-
 /**
  * Implementação do DAO (Data Access Object) para gerenciamento de carros
  * utilizando uma estrutura de dados do tipo fila com dupla terminação (DEQue).
@@ -259,7 +257,32 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public String getMostPopularModel() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        HashMap<String, Integer> models = new HashMap<>();
+        DEQueable <Car> tempQueable = new LinkedDEQue<>();
+            
+        String modelopopular = null;
+        int maxmodelo = 0;
+        while (!cars.isEmpty()) {
+            Car tempCar = cars.dequeue();
+            tempQueable.enqueue(tempCar);
+
+            if (tempCar.getModel() != null) {
+                String modeloatual = tempCar.getModel().toUpperCase();
+                int contador = models.getOrDefault(modeloatual, 0) + 1;
+                models.put(modeloatual, contador);
+                if (contador > maxmodelo) {
+                    maxmodelo = contador;
+                    modelopopular = modeloatual;
+                }
+            }
+        } 
+        while (!tempQueable.isEmpty()){
+            cars.enqueue(tempQueable.dequeue());
+        }
+        return modelopopular;
     }
 
     @Override
