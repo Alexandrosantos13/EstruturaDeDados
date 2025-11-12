@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -364,8 +365,29 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car[] getCarsByParkingDuration(long minHours, long maxHours) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        LocalDateTime horalocal = LocalDateTime.now();
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        DEQueable<Car> resultdeque = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            tempdeque.enqueue(temp);
+            if (temp.getArrived()!=null){  
+                long tempo = Duration.between(temp.getArrived(), horalocal).toHours();
+                if (tempo>=minHours && tempo<=maxHours){
+                    resultdeque.enqueue(temp);
+                }
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        return queueToArray(resultdeque);
     }
+
+
 
     @Override
     public int getAvailableSpaces() {
