@@ -275,4 +275,16 @@ public class LinkedDEQue<T> implements DEQueable<T> {
 	public int maxCapacity(){
 		return length;
 	}
+
+	@SuppressWarnings("unchecked")
+    @Override
+    public T[] selectAll() {
+        T[] array = (T[]) new Object[amount];
+        DoubleNode<T> current = headPointer;
+        for (int i = 0; i < amount; i++) {
+            array[i] = current.getData();
+            current = current.getNext();
+        }
+        return array;
+    }
 }

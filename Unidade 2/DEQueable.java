@@ -20,7 +20,7 @@ public interface DEQueable<T> {
     T dequeue();                //D
     T endDequeue();             //D
 
-
+    T [] selectAll();
     boolean isEmpty();
     boolean isFull();
     String print();
