@@ -1,5 +1,6 @@
-
 import java.time.LocalDateTime;
+
+import br.edu.ifba.vdc.bsi.linkeddequedao.dao.repository.LinkedDEQue;
 
 /**
  * Implementação do DAO (Data Access Object) para gerenciamento de carros
@@ -24,12 +25,12 @@ public class CarDAOLinkedDEQue implements CarDAO {
     // Operações básicas CRUD
     @Override
     public void addCar(Car car) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        cars.enqueue(car);
     }
 
     @Override
     public Car getCar(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        
     }
 
     @Override
