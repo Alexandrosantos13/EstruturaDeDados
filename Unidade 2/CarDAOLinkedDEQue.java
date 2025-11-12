@@ -340,7 +340,9 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public void clearAllCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        while (!cars.isEmpty()){
+            cars.dequeue();
+        }
     }
 
     @Override
