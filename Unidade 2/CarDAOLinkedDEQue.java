@@ -176,7 +176,22 @@ public class CarDAOLinkedDEQue implements CarDAO {
     // Operações de análise e estatísticas
     @Override
     public Car getCarByNewestArrival() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        Car result = null;
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            tempdeque.enqueue(temp);
+            if (result == null && temp != null && temp.getArrived() != null){
+                result = temp;
+            }
+            if (temp != null && temp.getArrived() != null && temp.getArrived().isAfter(result.getArrived())){
+                result = temp;
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        return result;
     }
 
     @Override
