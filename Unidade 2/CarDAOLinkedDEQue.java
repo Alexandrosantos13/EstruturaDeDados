@@ -141,7 +141,19 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car[] getCarsByOwner(String owner) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        DEQueable<Car> result = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            tempdeque.enqueue(temp);
+            if (temp != null && temp.getOwnerName() != null && temp.getOwnerName().equalsIgnoreCase(owner)) {
+                result.enqueue(temp);
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        return queueToArray(result);
     }
 
     @Override
