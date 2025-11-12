@@ -192,7 +192,7 @@ public class CarDAOLinkedList implements CarDAO {
                     marcapopular = marcaAtual;
                 }
             }
-        }
+        } 
 
         return marcapopular;
     }

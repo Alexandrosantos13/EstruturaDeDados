@@ -1,5 +1,3 @@
-package br.edu.ifba.vdc.bsi.linkeddequedao.dao.repository;
-
 /**
  * Interface que define as operações básicas de uma fila com dupla terminação.
  * Esta interface define os métodos que devem ser implementados

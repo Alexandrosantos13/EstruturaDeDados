@@ -1,4 +1,6 @@
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 import br.edu.ifba.vdc.bsi.linkeddequedao.dao.repository.LinkedDEQue;
 
@@ -227,7 +229,32 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public String getMostPopularMark() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        HashMap<String, Integer> marcas = new HashMap<>();
+        DEQueable <Car> tempQueable = new LinkedDEQue<>();
+            
+        String marcapopular = null;
+        int maxmarca = 0;
+        while (!cars.isEmpty()) {
+            Car tempCar = cars.dequeue();
+            tempQueable.enqueue(tempCar);
+
+            if (tempCar.getMark() != null) {
+                String marcaAtual = tempCar.getMark().toUpperCase();
+                int contador = marcas.getOrDefault(marcaAtual, 0) + 1;
+                marcas.put(marcaAtual, contador);
+                if (contador > maxmarca) {
+                    maxmarca = contador;
+                    marcapopular = marcaAtual;
+                }
+            }
+        } 
+        while (!tempQueable.isEmpty()){
+            cars.enqueue(tempQueable.dequeue());
+        }
+        return marcapopular;
     }
 
     @Override
