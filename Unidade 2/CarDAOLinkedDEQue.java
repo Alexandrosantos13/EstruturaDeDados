@@ -319,7 +319,23 @@ public class CarDAOLinkedDEQue implements CarDAO {
     // Operações de gerenciamento
     @Override
     public boolean isCarInPlaced(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        boolean result = false;
+        DEQueable <Car> tempDeQueable = new LinkedDEQue<>();
+        while (!cars.isEmpty()){
+            Car temp = cars.dequeue();
+            tempDeQueable.enqueue(temp);
+            if (temp.getLicensePlate()!=null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)){
+                result=true;
+            }
+
+        }
+        while (!tempDeQueable.isEmpty()){
+            cars.enqueue(tempDeQueable.dequeue());
+        }
+        return result;
     }
 
     @Override
