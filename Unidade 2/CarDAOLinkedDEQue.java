@@ -30,7 +30,18 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car getCar(String plateLicense) {
-        
+        DEQueable <Car> tempdeque = new LinkedDEQue<>();
+        Car result = null;
+        while (!cars.isEmpty()){
+            tempdeque.enqueue(cars.dequeue());
+            if (tempdeque.rear().getLicensePlate().equalsIgnoreCase(plateLicense)){
+                result = tempdeque.rear();
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        return result;
     }
 
     @Override
@@ -180,5 +191,14 @@ public class CarDAOLinkedDEQue implements CarDAO {
     @Override
     public Car[] getCarsWithLongParking(long thresholdHours) {
         throw new UnsupportedOperationException("Operação ainda não implementada");
+    }
+    private Car[] queueToArray(DEQueable<Car> queue) {
+        Car[] resultArrayCars = new Car[queue.size()];
+        int index = 0;
+        while (!queue.isEmpty()) {
+            resultArrayCars[index] = queue.dequeue();
+            index++;
+        }
+        return resultArrayCars;
     }
 }
