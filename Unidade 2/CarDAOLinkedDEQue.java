@@ -287,8 +287,34 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public String getMostPopularColor() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        HashMap<String, Integer> colors = new HashMap<>();
+        DEQueable <Car> tempQueable = new LinkedDEQue<>();
+            
+        String corpopular = null;
+        int maxcor = 0;
+        while (!cars.isEmpty()) {
+            Car tempCar = cars.dequeue();
+            tempQueable.enqueue(tempCar);
+
+            if (tempCar.getColor() != null) {
+                String coratual = tempCar.getColor().toUpperCase();
+                int contador = colors.getOrDefault(coratual, 0) + 1;
+                colors.put(coratual, contador);
+                if (contador > maxcor) {
+                    maxcor = contador;
+                    corpopular = coratual;
+                }
+            }
+        } 
+        while (!tempQueable.isEmpty()){
+            cars.enqueue(tempQueable.dequeue());
+        }
+        return corpopular;
     }
+
 
     // Operações de gerenciamento
     @Override
