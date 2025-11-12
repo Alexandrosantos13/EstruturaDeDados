@@ -213,11 +213,11 @@ public class CarDAOLinkedDEQue implements CarDAO {
         }
         return result;
     }
-    
+
     // Operações de relatório e estatísticas
     @Override
     public String printCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.toString();
     }
 
     @Override
