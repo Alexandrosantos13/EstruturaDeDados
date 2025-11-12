@@ -84,7 +84,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
     // Operações de consulta específicas para carros
     @Override
     public Car getCarByLicensePlate(String licensePlate) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return getCar(licensePlate);
     }
 
     @Override
