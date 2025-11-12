@@ -396,7 +396,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public boolean isParkingEmpty() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.isEmpty();
     }
 
     @Override
