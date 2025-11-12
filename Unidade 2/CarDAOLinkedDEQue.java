@@ -158,7 +158,19 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car[] getCarsByMomentArrival(LocalDateTime initialMoment, LocalDateTime finalMoment) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        DEQueable<Car> result = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            tempdeque.enqueue(temp);
+            if (temp != null && temp.getArrived() != null && !temp.getArrived().isBefore(initialMoment) && !temp.getArrived().isAfter(finalMoment)) {
+                result.enqueue(temp);
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        return queueToArray(result);
     }
 
     // Operações de análise e estatísticas
