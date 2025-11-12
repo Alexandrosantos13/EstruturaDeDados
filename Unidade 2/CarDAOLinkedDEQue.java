@@ -107,7 +107,19 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car[] getCarsByModel(String model) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        DEQueable<Car> result = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            tempdeque.enqueue(temp);
+            if (temp != null && temp.getModel() != null && temp.getModel().equalsIgnoreCase(model)) {
+                result.enqueue(temp);
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        return queueToArray(result);
     }
 
     @Override
