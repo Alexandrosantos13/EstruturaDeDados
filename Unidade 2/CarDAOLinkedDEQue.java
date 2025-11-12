@@ -30,15 +30,15 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car getCar(String plateLicense) {
-        DEQueable <Car> tempdeque = new LinkedDEQue<>();
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
         Car result = null;
-        while (!cars.isEmpty()){
+        while (!cars.isEmpty()) {
             tempdeque.enqueue(cars.dequeue());
-            if (tempdeque.rear().getLicensePlate().equalsIgnoreCase(plateLicense)){
+            if (tempdeque.rear().getLicensePlate().equalsIgnoreCase(plateLicense)) {
                 result = tempdeque.rear();
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return result;
@@ -46,17 +46,39 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car[] getAllCars() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.selectAll();
     }
 
     @Override
     public void updateCar(Car newCar) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
+            Car tempcar = cars.dequeue();
+            if (tempcar.getLicensePlate().equalsIgnoreCase(newCar.getLicensePlate())) {
+                tempdeque.enqueue(newCar);
+            } else {
+                tempdeque.enqueue(tempcar);
+            }
+        }
+        while (!tempdeque.isEmpty()) {
+            cars.enqueue(tempdeque.dequeue());
+        }
     }
 
     @Override
     public Car deleteCar(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
+            Car tempcar = cars.dequeue();
+            if (!tempcar.getLicensePlate().equalsIgnoreCase(plateLicense)) {
+                tempdeque.enqueue(tempcar);
+            } else {
+            }
+        }
+        while (!tempdeque.isEmpty()) {
+            cars.enqueue(tempdeque.dequeue());
+        }
+        return null;
     }
 
     // Operações de consulta específicas para carros
@@ -192,6 +214,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
     public Car[] getCarsWithLongParking(long thresholdHours) {
         throw new UnsupportedOperationException("Operação ainda não implementada");
     }
+
     private Car[] queueToArray(DEQueable<Car> queue) {
         Car[] resultArrayCars = new Car[queue.size()];
         int index = 0;
