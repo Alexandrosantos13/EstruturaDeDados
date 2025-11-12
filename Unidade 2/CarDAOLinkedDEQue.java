@@ -401,7 +401,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public int getMaxCapacity() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        return cars.maxCapacity();
     }
 
     @Override
