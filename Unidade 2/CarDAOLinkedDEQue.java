@@ -347,7 +347,19 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public void removeCarsOlderThan(LocalDateTime date) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            if (temp.getArrived() == null || !temp.getArrived().isBefore(date)){
+                tempdeque.enqueue(temp);
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
     }
 
     @Override
