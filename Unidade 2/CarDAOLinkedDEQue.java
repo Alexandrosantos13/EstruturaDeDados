@@ -416,7 +416,12 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public long getParkingDuration(String plateLicense) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        Car car = getCarByLicensePlate(plateLicense);
+        if (car != null && car.getArrived() != null) {
+            LocalDateTime horalocal = LocalDateTime.now();
+            return Duration.between(car.getArrived(), horalocal).toHours(); 
+        }
+        return 0L;
     }
 
     @Override
