@@ -99,7 +99,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
                 result.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return queueToArray(result);
@@ -117,7 +117,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
                 result.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return queueToArray(result);
@@ -134,7 +134,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
                 result.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return queueToArray(result);
@@ -151,7 +151,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
                 result.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return queueToArray(result);
@@ -164,11 +164,12 @@ public class CarDAOLinkedDEQue implements CarDAO {
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
             tempdeque.enqueue(temp);
-            if (temp != null && temp.getArrived() != null && !temp.getArrived().isBefore(initialMoment) && !temp.getArrived().isAfter(finalMoment)) {
+            if (temp != null && temp.getArrived() != null && !temp.getArrived().isBefore(initialMoment)
+                    && !temp.getArrived().isAfter(finalMoment)) {
                 result.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return queueToArray(result);
@@ -182,14 +183,14 @@ public class CarDAOLinkedDEQue implements CarDAO {
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
             tempdeque.enqueue(temp);
-            if (result == null && temp != null && temp.getArrived() != null){
+            if (result == null && temp != null && temp.getArrived() != null) {
                 result = temp;
             }
-            if (temp != null && temp.getArrived() != null && temp.getArrived().isAfter(result.getArrived())){
+            if (temp != null && temp.getArrived() != null && temp.getArrived().isAfter(result.getArrived())) {
                 result = temp;
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return result;
@@ -202,14 +203,14 @@ public class CarDAOLinkedDEQue implements CarDAO {
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
             tempdeque.enqueue(temp);
-            if (result == null && temp != null && temp.getArrived() != null){
+            if (result == null && temp != null && temp.getArrived() != null) {
                 result = temp;
             }
-            if (temp != null && temp.getArrived() != null && temp.getArrived().isBefore(result.getArrived())){
+            if (temp != null && temp.getArrived() != null && temp.getArrived().isBefore(result.getArrived())) {
                 result = temp;
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return result;
@@ -232,8 +233,8 @@ public class CarDAOLinkedDEQue implements CarDAO {
             throw new NoSuchElementException("Erro: a lista está vazia");
         }
         HashMap<String, Integer> marcas = new HashMap<>();
-        DEQueable <Car> tempQueable = new LinkedDEQue<>();
-            
+        DEQueable<Car> tempQueable = new LinkedDEQue<>();
+
         String marcapopular = null;
         int maxmarca = 0;
         while (!cars.isEmpty()) {
@@ -249,8 +250,8 @@ public class CarDAOLinkedDEQue implements CarDAO {
                     marcapopular = marcaAtual;
                 }
             }
-        } 
-        while (!tempQueable.isEmpty()){
+        }
+        while (!tempQueable.isEmpty()) {
             cars.enqueue(tempQueable.dequeue());
         }
         return marcapopular;
@@ -262,8 +263,8 @@ public class CarDAOLinkedDEQue implements CarDAO {
             throw new NoSuchElementException("Erro: a lista está vazia");
         }
         HashMap<String, Integer> models = new HashMap<>();
-        DEQueable <Car> tempQueable = new LinkedDEQue<>();
-            
+        DEQueable<Car> tempQueable = new LinkedDEQue<>();
+
         String modelopopular = null;
         int maxmodelo = 0;
         while (!cars.isEmpty()) {
@@ -279,8 +280,8 @@ public class CarDAOLinkedDEQue implements CarDAO {
                     modelopopular = modeloatual;
                 }
             }
-        } 
-        while (!tempQueable.isEmpty()){
+        }
+        while (!tempQueable.isEmpty()) {
             cars.enqueue(tempQueable.dequeue());
         }
         return modelopopular;
@@ -292,8 +293,8 @@ public class CarDAOLinkedDEQue implements CarDAO {
             throw new NoSuchElementException("Erro: a lista está vazia");
         }
         HashMap<String, Integer> colors = new HashMap<>();
-        DEQueable <Car> tempQueable = new LinkedDEQue<>();
-            
+        DEQueable<Car> tempQueable = new LinkedDEQue<>();
+
         String corpopular = null;
         int maxcor = 0;
         while (!cars.isEmpty()) {
@@ -309,13 +310,12 @@ public class CarDAOLinkedDEQue implements CarDAO {
                     corpopular = coratual;
                 }
             }
-        } 
-        while (!tempQueable.isEmpty()){
+        }
+        while (!tempQueable.isEmpty()) {
             cars.enqueue(tempQueable.dequeue());
         }
         return corpopular;
     }
-
 
     // Operações de gerenciamento
     @Override
@@ -324,16 +324,16 @@ public class CarDAOLinkedDEQue implements CarDAO {
             throw new NoSuchElementException("Erro: a lista está vazia");
         }
         boolean result = false;
-        DEQueable <Car> tempDeQueable = new LinkedDEQue<>();
-        while (!cars.isEmpty()){
+        DEQueable<Car> tempDeQueable = new LinkedDEQue<>();
+        while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
             tempDeQueable.enqueue(temp);
-            if (temp.getLicensePlate()!=null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)){
-                result=true;
+            if (temp.getLicensePlate() != null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)) {
+                result = true;
             }
 
         }
-        while (!tempDeQueable.isEmpty()){
+        while (!tempDeQueable.isEmpty()) {
             cars.enqueue(tempDeQueable.dequeue());
         }
         return result;
@@ -341,7 +341,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public void clearAllCars() {
-        while (!cars.isEmpty()){
+        while (!cars.isEmpty()) {
             cars.dequeue();
         }
     }
@@ -354,11 +354,11 @@ public class CarDAOLinkedDEQue implements CarDAO {
         DEQueable<Car> tempdeque = new LinkedDEQue<>();
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
-            if (temp.getArrived() == null || !temp.getArrived().isBefore(date)){
+            if (temp.getArrived() == null || !temp.getArrived().isBefore(date)) {
                 tempdeque.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
     }
@@ -374,20 +374,18 @@ public class CarDAOLinkedDEQue implements CarDAO {
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
             tempdeque.enqueue(temp);
-            if (temp.getArrived()!=null){  
+            if (temp.getArrived() != null) {
                 long tempo = Duration.between(temp.getArrived(), horalocal).toHours();
-                if (tempo>=minHours && tempo<=maxHours){
+                if (tempo >= minHours && tempo <= maxHours) {
                     resultdeque.enqueue(temp);
                 }
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
         return queueToArray(resultdeque);
     }
-
-
 
     @Override
     public int getAvailableSpaces() {
@@ -406,7 +404,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public int getOccupancyRate() {
-        return (cars.maxCapacity()/cars.size())*100;
+        return (cars.maxCapacity() / cars.size()) * 100;
     }
 
     @Override
@@ -419,7 +417,7 @@ public class CarDAOLinkedDEQue implements CarDAO {
         Car car = getCarByLicensePlate(plateLicense);
         if (car != null && car.getArrived() != null) {
             LocalDateTime horalocal = LocalDateTime.now();
-            return Duration.between(car.getArrived(), horalocal).toHours(); 
+            return Duration.between(car.getArrived(), horalocal).toHours();
         }
         return 0L;
     }
@@ -432,11 +430,11 @@ public class CarDAOLinkedDEQue implements CarDAO {
         DEQueable<Car> tempdeque = new LinkedDEQue<>();
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
-            if (temp.getOwnerName() == null || !temp.getOwnerName().equalsIgnoreCase(owner)){
+            if (temp.getOwnerName() == null || !temp.getOwnerName().equalsIgnoreCase(owner)) {
                 tempdeque.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
     }
@@ -448,23 +446,23 @@ public class CarDAOLinkedDEQue implements CarDAO {
         }
         DEQueable<Car> tempdeque = new LinkedDEQue<>();
         long result = 0L;
-        LocalDateTime horalocal= LocalDateTime.now();
+        LocalDateTime horalocal = LocalDateTime.now();
         int contador = 0;
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
             tempdeque.enqueue(temp);
-            if (temp.getArrived() != null ){
-                result += Duration.between(temp.getArrived(),horalocal).toHours();
-                contador +=1;
+            if (temp.getArrived() != null) {
+                result += Duration.between(temp.getArrived(), horalocal).toHours();
+                contador += 1;
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
-        if (contador == 0){
+        if (contador == 0) {
             return 0L;
         }
-        return result/contador;
+        return result / contador;
     }
 
     @Override
@@ -478,17 +476,19 @@ public class CarDAOLinkedDEQue implements CarDAO {
         while (!cars.isEmpty()) {
             Car temp = cars.dequeue();
             tempdeque.enqueue(temp);
-            if (temp.getArrived() != null && Duration.between(temp.getArrived(), horalocal).toHours()>=thresholdHours){
+            if (temp.getArrived() != null
+                    && Duration.between(temp.getArrived(), horalocal).toHours() >= thresholdHours) {
                 resultDeQueable.enqueue(temp);
             }
         }
-        while (!tempdeque.isEmpty()){
+        while (!tempdeque.isEmpty()) {
             cars.enqueue(tempdeque.dequeue());
         }
-        
+
         return queueToArray(resultDeQueable);
     }
 
+    
     private Car[] queueToArray(DEQueable<Car> queue) {
         Car[] resultArrayCars = new Car[queue.size()];
         int index = 0;
