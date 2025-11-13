@@ -192,7 +192,7 @@ public class CarDAOLinkedList implements CarDAO {
                     marcapopular = marcaAtual;
                 }
             }
-        } 
+        }
 
         return marcapopular;
     }
@@ -262,11 +262,11 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public void removeCarsOlderThan(LocalDateTime date) {
-        if (cars.isEmpty()){
+        if (cars.isEmpty()) {
             throw new NoSuchElementException("Erro lista vazia");
         }
         for (int i = cars.size() - 1; i >= 0; i--) {
-            if (cars.select(i).getArrived()!=null && cars.select(i).getArrived().isBefore(date)) {
+            if (cars.select(i).getArrived() != null && cars.select(i).getArrived().isBefore(date)) {
                 cars.delete(i);
             }
         }
@@ -274,30 +274,30 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public Car[] getCarsByParkingDuration(long minHours, long maxHours) {
-       LocalDateTime horalocal = LocalDateTime.now();
-       Listable <Car> result = new LinkedList<>();  
-       if (cars.isEmpty()){
+        LocalDateTime horalocal = LocalDateTime.now();
+        Listable<Car> result = new LinkedList<>();
+        if (cars.isEmpty()) {
             throw new NoSuchElementException("Erro lista vazia");
         }
-        for (int i = 0; i < cars.size() ; i++) {
-            if (cars.select(i).getArrived()!=null) {
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars.select(i).getArrived() != null) {
                 long comparacao = Duration.between(cars.select(i).getArrived(), horalocal).toHours();
-                if (comparacao>=minHours && comparacao<=maxHours){
+                if (comparacao >= minHours && comparacao <= maxHours) {
                     result.append(cars.select(i));
                 }
             }
         }
         return listToArray(result);
-    }   
-    
+    }
+
     @Override
     public int getAvailableSpaces() {
-        return cars.maxCapacity()-cars.size();
+        return cars.maxCapacity() - cars.size();
     }
 
     @Override
     public boolean isParkingEmpty() {
-        if (cars.isEmpty()){
+        if (cars.isEmpty()) {
             return true;
         }
         return false;
@@ -310,12 +310,12 @@ public class CarDAOLinkedList implements CarDAO {
 
     @Override
     public int getOccupancyRate() {
-        return (cars.maxCapacity()/cars.size())*100;
+        return (cars.maxCapacity() / cars.size()) * 100;
     }
 
     @Override
     public boolean isParkingFull() {
-        if (cars.isFull()){
+        if (cars.isFull()) {
             return true;
         }
         return false;
@@ -331,31 +331,31 @@ public class CarDAOLinkedList implements CarDAO {
     public void removeCarsByOwner(String owner) {
         for (int i = 0; i < cars.size(); i++) {
             Car tempCar = cars.select(i);
-            if (tempCar!=null && tempCar.getOwnerName() != null && tempCar.getOwnerName().equalsIgnoreCase(owner)) {
+            if (tempCar != null && tempCar.getOwnerName() != null && tempCar.getOwnerName().equalsIgnoreCase(owner)) {
                 cars.delete(i);
-                }
             }
+        }
     }
 
     @Override
     public long getAverageArrivalTime() {
         int totalcarros = cars.size();
-        long totalhoras=0;
+        long totalhoras = 0;
         for (int i = 0; i < cars.size(); i++) {
-                totalhoras+=getParkingDuration(cars.select(i).getLicensePlate());
-            }
-        return totalhoras/totalcarros;
+            totalhoras += getParkingDuration(cars.select(i).getLicensePlate());
+        }
+        return totalhoras / totalcarros;
     }
 
     @Override
     public Car[] getCarsWithLongParking(long thresholdHours) {
-        Listable <Car> result = new LinkedList<>();  
+        Listable<Car> result = new LinkedList<>();
         for (int i = 0; i < cars.size(); i++) {
-                if (getParkingDuration(cars.select(i).getLicensePlate())>thresholdHours){
-                    result.append(cars.select(i));
-                }
+            if (getParkingDuration(cars.select(i).getLicensePlate()) > thresholdHours) {
+                result.append(cars.select(i));
             }
-            return listToArray(result);
+        }
+        return listToArray(result);
     }
 
     public Car[] listToArray(Listable<Car> lista) {
