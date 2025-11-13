@@ -469,7 +469,24 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public Car[] getCarsWithLongParking(long thresholdHours) {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        DEQueable<Car> resultDeQueable = new LinkedDEQue<>();
+        LocalDateTime horalocal = LocalDateTime.now();
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            tempdeque.enqueue(temp);
+            if (temp.getArrived() != null && Duration.between(temp.getArrived(), horalocal).toHours()>=thresholdHours){
+                resultDeQueable.enqueue(temp);
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        
+        return queueToArray(resultDeQueable);
     }
 
     private Car[] queueToArray(DEQueable<Car> queue) {
