@@ -443,7 +443,28 @@ public class CarDAOLinkedDEQue implements CarDAO {
 
     @Override
     public long getAverageArrivalTime() {
-        throw new UnsupportedOperationException("Operação ainda não implementada");
+        if (cars.isEmpty()) {
+            throw new NoSuchElementException("Erro: a lista está vazia");
+        }
+        DEQueable<Car> tempdeque = new LinkedDEQue<>();
+        long result = 0L;
+        LocalDateTime horalocal= LocalDateTime.now();
+        int contador = 0;
+        while (!cars.isEmpty()) {
+            Car temp = cars.dequeue();
+            tempdeque.enqueue(temp);
+            if (temp.getArrived() != null ){
+                result += Duration.between(temp.getArrived(),horalocal).toHours();
+                contador +=1;
+            }
+        }
+        while (!tempdeque.isEmpty()){
+            cars.enqueue(tempdeque.dequeue());
+        }
+        if (contador == 0){
+            return 0L;
+        }
+        return result/contador;
     }
 
     @Override
