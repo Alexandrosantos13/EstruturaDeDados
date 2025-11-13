@@ -480,7 +480,8 @@ public class CarDAOLinkedStack implements CarDAO {
         while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
             tempStack.push(temp);
-            if (temp.getLicensePlate() !=null && temp.getArrived() !=null && temp.getLicensePlate().equalsIgnoreCase(plateLicense)) {
+            if (temp.getLicensePlate() != null && temp.getArrived() != null
+                    && temp.getLicensePlate().equalsIgnoreCase(plateLicense)) {
                 duracao = Duration.between(temp.getArrived(), horalocal).toHours();
                 break;
             }
@@ -495,15 +496,15 @@ public class CarDAOLinkedStack implements CarDAO {
     @Override
     public void removeCarsByOwner(String owner) {
         Stackable<Car> tempStack = new LinkedStack<>();
-         while (!StackCars.isEmpty()) {
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
-            if (temp.getOwnerName()!=null && !temp.getOwnerName().equalsIgnoreCase(owner)){
+            if (temp.getOwnerName() != null && !temp.getOwnerName().equalsIgnoreCase(owner)) {
                 tempStack.push(temp);
-            }else if (temp.getOwnerName()==null){
+            } else if (temp.getOwnerName() == null) {
                 tempStack.push(temp);
             }
-         }
-          while (!tempStack.isEmpty()) {
+        }
+        while (!tempStack.isEmpty()) {
             StackCars.push(tempStack.pop());
         }
     }
@@ -512,24 +513,24 @@ public class CarDAOLinkedStack implements CarDAO {
     public long getAverageArrivalTime() {
         Stackable<Car> tempStack = new LinkedStack<>();
         LocalDateTime horalocal = LocalDateTime.now();
-        Long duracaototal=0L;
+        Long duracaototal = 0L;
         Long result = 0L;
         int carrosvalidos = 0;
-        while (!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
             tempStack.push(temp);
-            if (temp.getArrived()!=null){
+            if (temp.getArrived() != null) {
                 duracaototal += Duration.between(temp.getArrived(), horalocal).toHours();
                 carrosvalidos++;
+            }
         }
-    }
-         while (!tempStack.isEmpty()) {
+        while (!tempStack.isEmpty()) {
             StackCars.push(tempStack.pop());
         }
-        if (carrosvalidos == 0){
+        if (carrosvalidos == 0) {
             return 0L;
         }
-        result=duracaototal/carrosvalidos;
+        result = duracaototal / carrosvalidos;
         return result;
     }
 
@@ -539,19 +540,19 @@ public class CarDAOLinkedStack implements CarDAO {
         Stackable<Car> resultStack = new LinkedStack<>();
         LocalDateTime horalocal = LocalDateTime.now();
         int index = 0;
-        while(!StackCars.isEmpty()){
+        while (!StackCars.isEmpty()) {
             Car temp = StackCars.pop();
             tempStack.push(temp);
-            if (temp.getArrived()!=null){
+            if (temp.getArrived() != null) {
                 long tempoestac = Duration.between(temp.getArrived(), horalocal).toHours();
-                if (tempoestac >= thresholdHours){
+                if (tempoestac >= thresholdHours) {
                     resultStack.push(temp);
                 }
             }
         }
-        Car [] resultlist = new Car[resultStack.getSize()];
-        while (!resultStack.isEmpty()){
-            resultlist[index]= resultStack.pop();
+        Car[] resultlist = new Car[resultStack.getSize()];
+        while (!resultStack.isEmpty()) {
+            resultlist[index] = resultStack.pop();
             index++;
         }
         return resultlist;
